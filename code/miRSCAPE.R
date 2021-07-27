@@ -41,11 +41,18 @@ modifySeuratObject <-
 # Prepare bulk data
 #
 # bulkk = bulkTransform(mrna)
-bulkTransform <- function(bulkmRNA) {
-  bulkmRNA = bulkmRNA + 1
-  bulkmRNA = log(bulkmRNA)
-  bulkmRNA = scale(bulkmRNA)
-  return(bulkmRNA)
+bulkTransform <- function(bulk, justNorm = FALSE) {
+  if(justNorm){
+    bulk = bulk + 1
+    bulk = log(bulk)
+  }
+  else{
+    bulk = bulk + 1
+    bulk = log(bulk)
+    bulk = scale(bulk)
+  }
+  
+  return(bulk)
 }
 
 # Predict miRNA expression
