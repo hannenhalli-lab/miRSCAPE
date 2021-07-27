@@ -20,7 +20,7 @@ require(Seurat)
 source("~/miRSCAPE-main/code/miRSCAPE.R")
 ```
 
-Rows are genes, columns are patient values. In order to properly run the code, gene names as row names must be provided. 
+Rows are genes, columns are patient values. In order to properly run the code, gene names as row names must be provided. To load the example scmRNA, bulk mRNA and bulk miRNA data, 
 ```
 example = readRDS('example data/example.rds')
 pdac_mirna <- read.delim("~/miRSCAPE-main/example data/pdac_mirna.txt", row.names=1)
@@ -35,7 +35,7 @@ clustId = c('Ductal cell type 1')
 ## Step 1. scRNA preparation
 To prepare the data which is stored in Seurat object, `modifySeuratObject` function should be used.
 
-ScRNA data preparation for only on the specific cell clusters
+ScRNA data preparation for only on the specific cell clusters. To specify the cell types, `clusterId` parameter should be used.
 ```
 denem = modifySeuratObject(pbmc = example, clusterId = clustId)
 
@@ -55,8 +55,9 @@ bulkk_mrna = bulkTransform(pdac_mrna)
 ```
 
 ## Step 3. Predict miRNA
-To predict the miRNAs, `miRSCAPE` function should be used. 
+To predict the miRNAs, `miRSCAPE` function should be used. The predicted miRNA expressions can be found in `pred`. The default parameters setting for XGBoost can be used but to change the parameter settings please use the corresponding parameters. `bstr` parameter is for booster, `objt` is for objective, `mdpth` is for maximum depth, `ett` is for eta, `nrnds` is for number of rounds, `echoIn` is for printing each n-th iteration evaluation messages, `esr` is for early stopping. 
+
 ```
-pred = miRSCAPE(bulkmRNA = bulkk_mrna, bulkmiRNA = bulkk_mirna, scmRNA = denem, nrnds = 20)
+pred = miRSCAPE(bulkmRNA = bulkk_mrna, bulkmiRNA = bulkk_mirna, scmRNA = denem)
 
 ```

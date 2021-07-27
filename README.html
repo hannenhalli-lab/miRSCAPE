@@ -185,7 +185,7 @@ pre code {
 rm(list = ls())
 require(Seurat)
 source(&quot;~/miRSCAPE-main/code/miRSCAPE.R&quot;)</code></pre>
-<p>Rows are genes, columns are patient values. In order to properly run the code, gene names as row names must be provided.</p>
+<p>Rows are genes, columns are patient values. In order to properly run the code, gene names as row names must be provided. To load the example scmRNA, bulk mRNA and bulk miRNA data,</p>
 <pre><code>example = readRDS(&#39;example data/example.rds&#39;)
 pdac_mirna &lt;- read.delim(&quot;~/miRSCAPE-main/example data/pdac_mirna.txt&quot;, row.names=1)
 pdac_mrna &lt;- read.delim(&quot;~/miRSCAPE-main/example data/pdac_mrna.txt&quot;, row.names=1)</code></pre>
@@ -193,8 +193,8 @@ pdac_mrna &lt;- read.delim(&quot;~/miRSCAPE-main/example data/pdac_mrna.txt&quot
 <pre><code>clustId = c(&#39;Ductal cell type 1&#39;)</code></pre>
 <div id="step-1.-scrna-preparation" class="section level2">
 <h2>Step 1. scRNA preparation</h2>
-<p>To prepare the data which is stored in Seurta object, <code>modifySeuratObject</code> function should be used.</p>
-<p>ScRNA data preparation for only on the specific cell clusters</p>
+<p>To prepare the data which is stored in Seurat object, <code>modifySeuratObject</code> function should be used.</p>
+<p>ScRNA data preparation for only on the specific cell clusters. To specify the cell types, <code>clusterId</code> parameter should be used.</p>
 <pre><code>denem = modifySeuratObject(pbmc = example, clusterId = clustId)
 </code></pre>
 <p>ScRNA data preparation on all cell clusters</p>
@@ -202,14 +202,14 @@ pdac_mrna &lt;- read.delim(&quot;~/miRSCAPE-main/example data/pdac_mrna.txt&quot
 </div>
 <div id="step-2.-bulk-data-preparation" class="section level2">
 <h2>Step 2. Bulk data preparation</h2>
-<p>Please use bulkTransform function. <code>justNorm</code> parameter is used only to log-transform the data. Don’t scale the miRNA data, please set <code>justNorm</code> parameter to TRUE in miRNA data.</p>
+<p>Please use bulkTransform function. <code>justNorm</code> parameter is used only to log-transform the data. Don’t scale the miRNA data, please set <code>justNorm</code> parameter to <code>TRUE</code> in miRNA data.</p>
 <pre><code>bulkk_mirna = bulkTransform(pdac_mirna, justNorm = TRUE)
 bulkk_mrna = bulkTransform(pdac_mrna)</code></pre>
 </div>
 <div id="step-3.-predict-mirna" class="section level2">
 <h2>Step 3. Predict miRNA</h2>
-<p>To predict the miRNAs, <code>miRSCAPE</code> function should be used.</p>
-<pre><code>pred = miRSCAPE(bulkmRNA = bulkk_mrna, bulkmiRNA = bulkk_mirna, scmRNA = denem, nrnds = 20)
+<p>To predict the miRNAs, <code>miRSCAPE</code> function should be used. The predicted miRNA expressions can be found in <code>pred</code>. The default parameters setting for XGBoost can be used but to change the parameter settings please use the corresponding parameters. <code>bstr</code> parameter is for booster, <code>objt</code> is for objective, <code>mdpth</code> is for maximum depth, <code>ett</code> is for eta, <code>nrnds</code> is for number of rounds, <code>echoIn</code> is for printing each n-th iteration evaluation messages, <code>esr</code> is for early stopping.</p>
+<pre><code>pred = miRSCAPE(bulkmRNA = bulkk_mrna, bulkmiRNA = bulkk_mirna, scmRNA = denem)
 </code></pre>
 </div>
 </div>
