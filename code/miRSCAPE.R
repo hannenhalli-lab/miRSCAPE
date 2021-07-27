@@ -95,5 +95,6 @@ miRSCAPE <-
       resultt  = rbind(resultt, t(pr))
     }
     row.names(resultt) = rownames(bulkmiRNA)
+    colnames(resultt) = colnames(scmRNA)
     return(resultt)
   }
