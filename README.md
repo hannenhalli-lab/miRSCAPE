@@ -33,7 +33,7 @@ clustId = c('Ductal cell type 1')
 ```
 
 ## Step 1. scRNA preparation
-To prepare the data which is stored in Seurta object, `modifySeuratObject` function should be used.
+To prepare the data which is stored in Seurat object, `modifySeuratObject` function should be used.
 
 ScRNA data preparation for only on the specific cell clusters
 ```
@@ -47,7 +47,7 @@ denem = modifySeuratObject(pbmc = example)
 ```
 
 ## Step 2. Bulk data preparation
-Please use bulkTransform function. `justNorm` parameter is used only to log-transform the data. Don't scale the miRNA data, please set `justNorm` parameter to TRUE in miRNA data.
+Please use bulkTransform function. `justNorm` parameter is used only to log-transform the data. Don't scale the miRNA data, please set `justNorm` parameter to `TRUE` in miRNA data.
 
 ```
 bulkk_mirna = bulkTransform(pdac_mirna, justNorm = TRUE)
